@@ -4,13 +4,13 @@ import React from "react";
 export default function FormLogin() {
   return (
     <div className="flex justify-center xl:bg-inherit  items-center sm:relative flex-col rounded-lg xl:mt-24 p-12 sm:w-[500px] xl:shadow-none 2xl:mt-0 xl:bottom-16 xl:w-[460px] 2xl:w-[550px]">
-      <h1 className="relative text-2xl md:text-3xl 2xl:text-5xl text-white text-shadow-lg font-bold animate-fadeIn">
+      <h1 className="relative text-2xl md:text-4xl 2xl:text-4xl text-white text-shadow-lg font-bold animate-fadeIn font-sans">
         SoftInventory
       </h1>
       <p className="relative text-lg md:text-xl 2xl:text-2xl text-gray-500 animate-fadeIn font-sans 2xl:mt-10 xl:mt-8">
         BIENVENIDO
       </p>
-      <p className="text-gray-400 relative text-base md:text-lg 2xl:text-xl animate-fadeIn font-light 2xl:mb-10 xl:mb-5">
+      <p className="text-gray-400 relative text-base md:text-lg 2xl:text-xl animate-fadeIn font-light 2xl:mb-10 xl:mb-5 font-sans">
         Ingresa tus datos para continuar
       </p>
 
@@ -21,7 +21,7 @@ export default function FormLogin() {
         <div className="w-full ">
           <label
             htmlFor="email"
-            className="text-start text-sm font-semibold text-gray-500 block"
+            className="text-start text-sm font-semibold text-gray-500 block font-sans"
           >
             Nombre de usuario o email
           </label>
@@ -36,7 +36,7 @@ export default function FormLogin() {
 
           <label
             htmlFor="password"
-            className="text-start text-sm font-semibold text-gray-500 block"
+            className="text-start text-sm font-semibold text-gray-500 block font-sans"
           >
             Contraseña
           </label>
@@ -53,14 +53,14 @@ export default function FormLogin() {
         <div className="flex flex-col gap-3 pt-5 w-full">
           <button
             type="submit"
-            className="w-full h-[35px] btn btn-primary bg-[#F97300] text-gray-500 rounded-md bg-opacity-20"
+            className="w-full h-[35px] btn btn-primary bg-[#F97300] text-gray-500 rounded-md bg-opacity-20 font-sans"
           >
             Iniciar Sesión
           </button>
 
           <button
             type="button"
-            className="flex justify-center items-center w-full h-[40px] btn btn-primary bg-gray-950 text-white rounded-md border-purple-300 border"
+            className="flex justify-center items-center w-full h-[40px] btn btn-primary bg-gray-950 text-white rounded-md border-purple-300 border font-sans"
             // onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
           >
             {/* <img
@@ -73,8 +73,8 @@ export default function FormLogin() {
         </div>
         <div>
           <div className="flex gap-2 ">
-            <p className="text-gray-500">¿No estás registrado? </p>
-            <Link href="/register" className="text-[#F97300]">
+            <p className="text-gray-500 font-sans">¿No estás registrado? </p>
+            <Link href="/register" className="text-[#F97300] font-sans">
               Regístrate aquí
             </Link>
           </div>
