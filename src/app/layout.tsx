@@ -3,19 +3,20 @@ import "./globals.css";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import { Layout } from "antd";
 import { Content } from "antd/es/layout/layout";
-import { Roboto_Mono, Josefin_Sans } from 'next/font/google'
- 
+import { Roboto_Mono, Josefin_Sans } from "next/font/google";
+import { AppContextProvider } from "@/context/modalContext";
+
 const josefin_sans = Josefin_Sans({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-josefin-sans',
-})
- 
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-josefin-sans",
+});
+
 const roboto_mono = Roboto_Mono({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-roboto-mono',
-})
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-roboto-mono",
+});
 
 export const metadata: Metadata = {
   title: "SoftInventory",
@@ -28,9 +29,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${josefin_sans.variable} ${roboto_mono.variable}`} >
+    <html
+      lang="en"
+      className={`${josefin_sans.variable} ${roboto_mono.variable}`}
+    >
       <body
-        // className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      // className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <AntdRegistry>
           <Layout>
@@ -42,9 +46,11 @@ export default function RootLayout({
                   backgroundColor: "#080B0C",
                 }}
               >
-                <div className="flex items-center justify-center ">
-                  {children}
-                </div>
+                <AppContextProvider>
+                  <div className="flex items-center justify-center ">
+                    {children}
+                  </div>
+                </AppContextProvider>
               </Content>
             </Layout>
           </Layout>

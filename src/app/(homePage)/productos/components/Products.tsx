@@ -1,17 +1,50 @@
-import { CameraOutlined } from '@ant-design/icons'
-import React from 'react'
+import { IProducts } from "@/interfaces/IProducts";
+import axios from "axios";
+import React from "react";
+import Card from "./Card";
+import AppModal from "@/components/modal/Modal";
 
-export default function Products() {
+// type ModalProps = {
+//   open: boolean
+//   close: () => void
+//   setOpen: (value: boolean) => void
+// }
+
+export const fetchProducts = async () => {
+  try {
+    const res = await axios.get("http://localhost:3005/api/products");
+    return res.data as IProducts[];
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// export const fetchCreateProducts = async () => {
+//   try {
+//     const res = await axios.post();
+//     console.log(res);
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
+
+export default async function Products() {
+  const products = await fetchProducts();
   return (
-    <div className='w-[170px] h-[260px] bg-slate-300 cursor-pointer'>
-        <div className='flex justify-center items-center bg-slate-100 h-40'>
-            <CameraOutlined/>
-        </div>
-        <div className='px-3 mt-2'>
-            <p className='text-gray-950'>Camisa oversize</p>
-            <p className='text-gray-950'>12</p>
-            <strong className='text-gray-950'>120000</strong>
-        </div>
+    <div className="flex-col">
+      <AppModal />
+      <div className="flex mt-8 gap-7">
+        {products?.map(({ description, image_url, name, price, stock, id }) => (
+          <Card
+            key={id}
+            image_url={image_url}
+            name={name}
+            description={description}
+            stock={stock}
+            price={price}
+          />
+        ))}
+      </div>
     </div>
-  )
+  );
 }

@@ -1,6 +1,7 @@
 import React from "react";
 // import Products from "../productos/components/Products";
 import AppCarousel from "@/components/AppCarousel";
+import ButtonIU from "@/components/buttonIU/ButtonIU";
 
 export default function page() {
   return (
@@ -9,12 +10,12 @@ export default function page() {
         Bienvenido de nuevo Jose!
       </h1>
       <p className="font-sans text-2xl font-light">Panel de administrador</p>
-      
+
       <div className="mt-5 mb-5">
-        <button className="bg-[#0d1111] flex justify-center items-center h-10 w-[150px] p-3 text-white font-sans ">Crear nueva orden</button>
+        <ButtonIU>Crear nueva orden</ButtonIU>
       </div>
-      <div className="p-5 w-[50rem] shadow-2xl rounded-md" >
-        <AppCarousel/>
+      <div className="p-5 w-[50rem] shadow-2xl rounded-md">
+        <AppCarousel />
       </div>
     </div>
   );

@@ -27,7 +27,7 @@ export default function layoutDashboardPage({
           }}
           style={{
             backgroundColor: "#0d1111",
-            borderRight: '1px solid #E8E2E2'
+            borderRight: "1px solid #E8E2E2",
           }}
         >
           <AppSider />

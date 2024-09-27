@@ -1,42 +1,34 @@
-import Products from "@/app/(homePage)/productos/components/Products";
+import Card from "@/app/(homePage)/productos/components/Card";
+import Products, { fetchProducts } from "@/app/(homePage)/productos/components/Products";
+import { IProducts } from "@/interfaces/IProducts";
 import { Carousel } from "antd";
 import React from "react";
 
-export default function AppCarousel() {
+export default async function AppCarousel() {
+  // const product  = await fetchProducts()
+
   return (
     <>
       <h1 className="text-2xl  font-sans"> Inventario de productos</h1>
       <Carousel autoplay className="p-2">
         <div className="text-black">
           <div className="flex justify-center gap-4">
-            <Products />
-            <Products />
-            <Products />
-            <Products />
+
           </div>
         </div>
         <div>
           <div className="flex justify-center gap-4">
-            <Products />
-            <Products />
-            <Products />
-            <Products />
+            
           </div>
         </div>
         <div>
           <div className="flex justify-center gap-4">
-            <Products />
-            <Products />
-            <Products />
-            <Products />
+            
           </div>
         </div>
         <div>
           <div className="flex justify-center gap-4">
-            <Products />
-            <Products />
-            <Products />
-            <Products />
+            
           </div>
         </div>
       </Carousel>

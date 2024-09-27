@@ -1,0 +1,9 @@
+import { CustomButtonProps } from "@/interfaces/IProducts";
+
+export default function ButtonIU({ children, onClick }: CustomButtonProps) {
+  return (
+    <button className="text-white bg-[#c55a02] flex justify-center items-center h-10 w-auto p-3 font-sans" onClick={onClick}>
+      {children}
+    </button>
+  );
+}
