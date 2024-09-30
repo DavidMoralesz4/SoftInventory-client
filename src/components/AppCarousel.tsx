@@ -1,6 +1,4 @@
-import Card from "@/app/(homePage)/productos/components/Card";
-import Products, { fetchProducts } from "@/app/(homePage)/productos/components/Products";
-import { IProducts } from "@/interfaces/IProducts";
+
 import { Carousel } from "antd";
 import React from "react";
 
