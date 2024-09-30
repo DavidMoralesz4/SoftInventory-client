@@ -2,7 +2,7 @@
 
 import { IProducts } from "@/interfaces/IProducts";
 import axios from "axios";
-import React, { FormEventHandler, useState } from "react";
+import React, { useState } from "react";
 
 type HandleCancel = {
   openModal: boolean;
@@ -10,8 +10,8 @@ type HandleCancel = {
 };
 
 export default function FormProduct({ onClose, openModal }: HandleCancel) {
-  if (!openModal) return <></>;
-
+  
+  // const [] =  useState()
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -19,12 +19,14 @@ export default function FormProduct({ onClose, openModal }: HandleCancel) {
     image_url: "",
     price: "",
   });
+  
+  if (!openModal) return <></>;
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     try {
-      const productData = {
+      const productData: IProducts= {
         ...formData,
         price: Number(formData.price),
       };
@@ -35,6 +37,7 @@ export default function FormProduct({ onClose, openModal }: HandleCancel) {
       );
 
       console.log("Success:", newProduct.data);
+      onClose()
     } catch (error) {
       console.log("Error", error);
     }
@@ -104,7 +107,7 @@ export default function FormProduct({ onClose, openModal }: HandleCancel) {
                     Introduce un precio
                   </label>
                   <input
-                    type="text"
+                    type="number"
                     placeholder="Introduce el precio..."
                     name="text"
                     className="2xl:w-full h-[40px] 2xl:h-[45px] w-[230px] sm:w-full bg-gray-600 text-white form-control mb-2 px-4 bg-opacity-20 rounded-md"

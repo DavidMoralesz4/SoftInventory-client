@@ -9,7 +9,7 @@ export default function Card({
   stock,
 }: IProducts) {
   return (
-    <div className="flex flex-col  justify-center w-[200px] h-[260px] cursor-pointer">
+    <div className="flex flex-col  justify-center w-[150px] sm:w-[200px] h-[260px] cursor-pointer">
       <div className="flex justify-center items-center  h-40 ">
         <img src={image_url} alt={name} className="rounded-lg" />
       </div>
@@ -19,7 +19,7 @@ export default function Card({
           <strong className="text-gray-950 font-sans text-[16px]">
             {name}
           </strong>
-          <p className="font-semibold font-sans">${price}</p>
+          <p className="font-semibold font-sans">${price.toLocaleString()}</p>
         </div>
         <div className=" flex justify-between items-center">
           <p className="text-gray-700 text-[13px] font-sans">{description}</p>
