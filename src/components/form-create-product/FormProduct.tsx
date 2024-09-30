@@ -32,7 +32,7 @@ export default function FormProduct({ onClose, openModal }: HandleCancel) {
       };
 
       const newProduct = await axios.post(
-        "http://localhost:3005/api/products/create",
+        "https://softinventory-back-production.up.railway.app/api/products/create",
         productData
       );
 

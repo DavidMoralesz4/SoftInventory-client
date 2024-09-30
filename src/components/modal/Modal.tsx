@@ -13,7 +13,7 @@ export const AppModal: React.FC = () => {
   return (
     <>
     <div className="flex-col justify-between xl:flex gap-3">
-        <h1 className="text-3xl text-center font-sans">Inventario de Productos</h1>
+        <h1 className="text-3xl font-sans">Inventario de Productos</h1>
       <ButtonIU onClick={() => setOpenModal(true)} >
         Agregar productos al inventario
       </ButtonIU>

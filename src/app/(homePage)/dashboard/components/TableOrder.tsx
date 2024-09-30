@@ -30,14 +30,19 @@ export default function TableOrder() {
       key: "first_name",
     },
     {
-      title: "Correo",
-      dataIndex: ["client_id", "email"], // Utilizamos un array para acceder a campos anidados
-      key: "email",
-    },
-    {
       title: "Apellido",
       dataIndex: ["client_id", "last_name"],
       key: "last_name",
+    },
+    {
+      title: "Direccion",
+      dataIndex: ["client_id", "address"], // Utilizamos un array para acceder a campos anidados
+      key: "address",
+    },
+    {
+      title: "Correo",
+      dataIndex: ["client_id", "email"], // Utilizamos un array para acceder a campos anidados
+      key: "email",
     },
     {
       title: "Documento",
@@ -70,5 +75,5 @@ export default function TableOrder() {
     },
   ];
 
-  return <Table dataSource={dataSources} columns={columns}></Table>;
+  return <Table dataSource={dataSources} columns={columns} className="cursor-pointer"></Table>;
 }
