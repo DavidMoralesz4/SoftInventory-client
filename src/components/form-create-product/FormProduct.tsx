@@ -11,7 +11,6 @@ type HandleCancel = {
 
 export default function FormProduct({ onClose, openModal }: HandleCancel) {
   
-  // const [] =  useState()
   const [formData, setFormData] = useState({
     name: "",
     description: "",

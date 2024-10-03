@@ -14,7 +14,7 @@ export const fetchOrders = async () => {
 export default async function Table() {
   return (
     <div >
-      <h1 className="font-sans text-3xl mb-4">Ordenes realizadas</h1>
+      <h1 className="font-sans text-3xl mb-4">Ordenes</h1>
       <TableOrder />
     </div>
   );

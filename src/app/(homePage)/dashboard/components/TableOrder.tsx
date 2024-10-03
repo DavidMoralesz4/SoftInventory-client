@@ -3,6 +3,7 @@ import { Select, Table } from "antd";
 import React, { useEffect, useState } from "react";
 import { fetchOrders } from "./Table";
 import { Order } from "@/interfaces/DataType";
+import axios from "axios";
 
 export default function TableOrder() {
   const [dataSources, setDataSource] = useState<Order[]>([]);
@@ -17,12 +18,22 @@ export default function TableOrder() {
     dataAxios();
   }, []);
 
-  const handleStatusChange = (value: string, record: Order) => {
-    console.log(
-      `Nuevo estado: ${value}, para la orden: ${record.client_id.first_name}`
-    );
-  };
+  const handleStatusChange = async (value: string, record: Order) => {
+    try {
+      const res = await axios.put(
+        `http://localhost:4000/api/order/update/${record._id}`, // Usar el ID de la orden en la URL
+        { status: value } // Enviar el status en el cuerpo
+      );
 
+      console.log(`Success: ${res.data} for ${record.client_id.first_name}`);
+    } catch (error: unknown) { // error: unknown no me permite acceder directamente a las propiedades "error.message" sin primero verificar que el obj tiene esa property!
+      if (error instanceof Error) {
+        console.error("Error al actualizar el status:", error.message);
+      } else {
+        console.error("Error desconocido", error);
+      }
+    }
+  };
   const columns = [
     {
       title: "Nombre",
@@ -53,11 +64,26 @@ export default function TableOrder() {
       title: "Estado",
       dataIndex: "status",
       key: "status",
-      render: (status: string[], record: Order) => (
+      render: (record: Order) => (
         <Select
-          value={status[0]} // Mostramos el primer valor por defecto
+          // defaultValue={handleStatusChange}
+          placeholder={"Seleciona un Estado"}
+          defaultActiveFirstOption
           onChange={(value) => handleStatusChange(value, record)}
-          options={status.map((st) => ({ label: st, value: st }))} // Mapeamos los valores de status
+          options={[
+            {
+              value: "Pendiente",
+              label: "Pendiente",
+            },
+            {
+              value: "Pago",
+              label: "Pago",
+            },
+            {
+              value: "Rechazado",
+              label: "Rechazado",
+            },
+          ]}
         />
       ),
     },
@@ -75,5 +101,11 @@ export default function TableOrder() {
     },
   ];
 
-  return <Table dataSource={dataSources} columns={columns} className="cursor-pointer"></Table>;
+  return (
+    <Table
+      dataSource={dataSources}
+      columns={columns}
+      className="cursor-pointer"
+    ></Table>
+  );
 }
