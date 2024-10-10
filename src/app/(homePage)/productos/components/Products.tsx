@@ -21,12 +21,13 @@ export default async function Products() {
     <div className="">
       <AppModal />
       <div className="grid grid-cols-2 mt-8 gap-7 w-auto sm:grid sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-5">
-        {products?.map(({ description, image_url, name, price, stock, id }) => (
+        {products?.map(({ description, image_url, name, price, stock, id, talla}) => (
           <Card
             key={id}
             image_url={image_url}
             name={name}
             description={description}
+            talla={talla}
             stock={stock}
             price={price}
           />

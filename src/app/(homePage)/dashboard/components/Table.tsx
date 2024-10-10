@@ -19,3 +19,5 @@ export default async function Table() {
     </div>
   );
 }
+// 1109046789 Carlos Mendoza
+// 093229213 Oscar Grajales

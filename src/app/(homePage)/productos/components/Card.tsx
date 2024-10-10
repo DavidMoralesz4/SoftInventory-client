@@ -1,13 +1,21 @@
 import { IProducts } from "@/interfaces/IProducts";
 import React from "react";
 
+
 export default function Card({
   image_url,
   name,
   description,
+  talla,
   price,
   stock,
 }: IProducts) {
+  const maxLength: number = 15
+  const truncatedDescription = description.length > maxLength 
+  ? `${description.slice(0, maxLength)}...` 
+  : description;
+
+
   return (
     <div className="flex flex-col  justify-center w-[150px] sm:w-[200px] h-[260px] cursor-pointer">
       <div className="flex justify-center items-center  h-40 ">
@@ -19,10 +27,11 @@ export default function Card({
           <strong className="text-gray-950 font-sans text-[16px]">
             {name}
           </strong>
-          <p className="font-semibold font-sans">${price.toLocaleString()}</p>
+          <p className="font-semibold font-sans">${price}</p>
         </div>
         <div className=" flex justify-between items-center">
-          <p className="text-gray-700 text-[13px] font-sans">{description}</p>
+          <p className="text-gray-700 text-[13px]  font-sans line-clamp-2">{truncatedDescription}</p>
+          <p className="font-semibold font-sans">T{talla}</p>
           <p className=" font-sans text-[#c55a02] text-[13px]">Und {stock}</p>
         </div>
       </div>

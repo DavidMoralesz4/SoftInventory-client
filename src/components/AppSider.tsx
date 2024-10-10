@@ -36,31 +36,6 @@ export default function AppSider() {
           ),
         },
         {
-          key: "2",
-          label: (
-            <Link href="/ordenes" className="text-white">
-              <div className="flex items-center gap-2">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="1.7em"
-                  height="1.7em"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    fill="white"
-                    fillRule="evenodd"
-                    d="M5.586 4.586C5 5.172 5 6.114 5 8v9c0 1.886 0 2.828.586 3.414S7.114 21 9 21h6c1.886 0 2.828 0 3.414-.586S19 18.886 19 17V8c0-1.886 0-2.828-.586-3.414S16.886 4 15 4H9c-1.886 0-2.828 0-3.414.586M9 8a1 1 0 0 0 0 2h6a1 1 0 1 0 0-2zm0 4a1 1 0 1 0 0 2h6a1 1 0 1 0 0-2zm0 4a1 1 0 1 0 0 2h4a1 1 0 1 0 0-2z"
-                    clipRule="evenodd"
-                  ></path>
-                </svg>
-                <p className="text-gray-100 font-sans font-light text-[18px]">
-                  Ordenes
-                </p>
-              </div>
-            </Link>
-          ),
-        },
-        {
           key: "3",
           label: (
             <Link href="/productos">
@@ -92,10 +67,10 @@ export default function AppSider() {
           ),
         },
         {
-          key: "4",
+          key: "2",
           label: (
-            <Link href="/envios" className="text-white">
-              <div className="flex justify-start items-center gap-2">
+            <Link href="/tienda" className="text-white">
+              <div className="flex items-center gap-2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="1.7em"
@@ -104,16 +79,41 @@ export default function AppSider() {
                 >
                   <path
                     fill="white"
-                    d="M21.6 11.22L17 7.52V5a1.91 1.91 0 0 0-1.81-2H3.79A1.91 1.91 0 0 0 2 5v10a2 2 0 0 0 1.2 1.88a3 3 0 1 0 5.6.12h6.36a3 3 0 1 0 5.64 0h.2a1 1 0 0 0 1-1v-4a1 1 0 0 0-.4-.78M20 12.48V15h-3v-4.92ZM7 18a1 1 0 1 1-1-1a1 1 0 0 1 1 1m12 0a1 1 0 1 1-1-1a1 1 0 0 1 1 1"
+                    fillRule="evenodd"
+                    d="M5.586 4.586C5 5.172 5 6.114 5 8v9c0 1.886 0 2.828.586 3.414S7.114 21 9 21h6c1.886 0 2.828 0 3.414-.586S19 18.886 19 17V8c0-1.886 0-2.828-.586-3.414S16.886 4 15 4H9c-1.886 0-2.828 0-3.414.586M9 8a1 1 0 0 0 0 2h6a1 1 0 1 0 0-2zm0 4a1 1 0 1 0 0 2h6a1 1 0 1 0 0-2zm0 4a1 1 0 1 0 0 2h4a1 1 0 1 0 0-2z"
+                    clipRule="evenodd"
                   ></path>
                 </svg>
                 <p className="text-gray-100 font-sans font-light text-[18px]">
-                  Envios
+                  Tienda
                 </p>
               </div>
             </Link>
           ),
         },
+        // {
+        //   key: "4",
+        //   label: (
+        //     <Link href="/envios" className="text-white">
+        //       <div className="flex justify-start items-center gap-2">
+        //         <svg
+        //           xmlns="http://www.w3.org/2000/svg"
+        //           width="1.7em"
+        //           height="1.7em"
+        //           viewBox="0 0 24 24"
+        //         >
+        //           <path
+        //             fill="white"
+        //             d="M21.6 11.22L17 7.52V5a1.91 1.91 0 0 0-1.81-2H3.79A1.91 1.91 0 0 0 2 5v10a2 2 0 0 0 1.2 1.88a3 3 0 1 0 5.6.12h6.36a3 3 0 1 0 5.64 0h.2a1 1 0 0 0 1-1v-4a1 1 0 0 0-.4-.78M20 12.48V15h-3v-4.92ZM7 18a1 1 0 1 1-1-1a1 1 0 0 1 1 1m12 0a1 1 0 1 1-1-1a1 1 0 0 1 1 1"
+        //           ></path>
+        //         </svg>
+        //         <p className="text-gray-100 font-sans font-light text-[18px]">
+        //           Envios
+        //         </p>
+        //       </div>
+        //     </Link>
+        //   ),
+        // },
       ],
     },
 

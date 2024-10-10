@@ -1,5 +1,5 @@
 "use client";
-import { Select, Table } from "antd";
+import { Pagination, Select, Table } from "antd";
 import React, { useEffect, useState } from "react";
 import { fetchOrders } from "./Table";
 import { Order } from "@/interfaces/DataType";
@@ -7,33 +7,17 @@ import axios from "axios";
 
 export default function TableOrder() {
   const [dataSources, setDataSource] = useState<Order[]>([]);
+  
 
   useEffect(() => {
     const dataAxios = async () => {
       const order = await fetchOrders();
       setDataSource(order);
-      console.log(order);
     };
 
     dataAxios();
   }, []);
 
-  const handleStatusChange = async (value: string, record: Order) => {
-    try {
-      const res = await axios.put(
-        `http://localhost:4000/api/order/update/${record._id}`, // Usar el ID de la orden en la URL
-        { status: value } // Enviar el status en el cuerpo
-      );
-
-      console.log(`Success: ${res.data} for ${record.client_id.first_name}`);
-    } catch (error: unknown) { // error: unknown no me permite acceder directamente a las propiedades "error.message" sin primero verificar que el obj tiene esa property!
-      if (error instanceof Error) {
-        console.error("Error al actualizar el status:", error.message);
-      } else {
-        console.error("Error desconocido", error);
-      }
-    }
-  };
   const columns = [
     {
       title: "Nombre",
@@ -66,7 +50,6 @@ export default function TableOrder() {
       key: "status",
       render: (record: Order) => (
         <Select
-          // defaultValue={handleStatusChange}
           placeholder={"Seleciona un Estado"}
           defaultActiveFirstOption
           onChange={(value) => handleStatusChange(value, record)}
@@ -101,11 +84,39 @@ export default function TableOrder() {
     },
   ];
 
+  const handleStatusChange = async (value: string, record: Order) => {
+    try {
+      const res = await axios.put(
+        `http://localhost:4000/api/order/update/${record._id}`, // Usar el ID de la orden en la URL
+        { status: value } // Enviar el status en el cuerpo
+      );
+
+      console.log(`Success: ${res.data} for ${record.client_id.first_name}`);
+    } catch (error: unknown) {
+      // error: unknown no me permite acceder directamente a las propiedades "error.message" sin primero verificar que el obj tiene esa property!
+      if (error instanceof Error) {
+        console.error("Error al actualizar el status:", error.message);
+      } else {
+        console.error("Error desconocido", error);
+      }
+    }
+  };
+
   return (
-    <Table
-      dataSource={dataSources}
-      columns={columns}
-      className="cursor-pointer"
-    ></Table>
+    <>
+      <Table
+        dataSource={dataSources}
+        columns={columns}
+        className="cursor-pointer"
+        pagination={false}
+      ></Table>
+      <Pagination
+        className="relative top-2"
+        showSizeChanger
+        // onShowSizeChange={}
+        defaultCurrent={3}
+        total={500}
+      />
+    </>
   );
 }

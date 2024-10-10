@@ -19,7 +19,8 @@
     "react-dom": "^18",
     "react-intl": "^6.7.0",
     "server-only": "^0.0.1",
-    "styled-components": "^6.1.13"
+    "styled-components": "^6.1.13",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@iconify/tailwind": "^1.1.3",

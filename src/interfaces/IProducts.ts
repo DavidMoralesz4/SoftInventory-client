@@ -4,6 +4,7 @@ export interface IProducts {
     id?: string
     name: string
     description: string
+    talla?: number
     stock: string
     image_url: string
     price: number

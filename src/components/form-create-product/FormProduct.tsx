@@ -1,33 +1,30 @@
 "use client";
 
 import { IProducts } from "@/interfaces/IProducts";
+import { HandleCancel } from "@/interfaces/typesModal";
 import axios from "axios";
 import React, { useState } from "react";
 
-type HandleCancel = {
-  openModal: boolean;
-  onClose: () => void;
-};
-
 export default function FormProduct({ onClose, openModal }: HandleCancel) {
-  
   const [formData, setFormData] = useState({
     name: "",
     description: "",
+    talla: "",
     stock: "",
     image_url: "",
     price: "",
   });
-  
+
   if (!openModal) return <></>;
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     try {
-      const productData: IProducts= {
+      const productData: IProducts = {
         ...formData,
         price: Number(formData.price),
+        talla: Number(formData.talla),
       };
 
       const newProduct = await axios.post(
@@ -36,7 +33,7 @@ export default function FormProduct({ onClose, openModal }: HandleCancel) {
       );
 
       console.log("Success:", newProduct.data);
-      onClose()
+      onClose();
     } catch (error) {
       console.log("Error", error);
     }
@@ -50,7 +47,7 @@ export default function FormProduct({ onClose, openModal }: HandleCancel) {
       >
         <div className="relative left-[455px] bottom-44">
           <button
-            className="text-2xl text-white hover:text-red-600 font-light"
+            className="text-white hover:text-red-600 font-light"
             onClick={() => onClose()}
           >
             X
@@ -94,6 +91,24 @@ export default function FormProduct({ onClose, openModal }: HandleCancel) {
                       setFormData({
                         ...formData,
                         description: event.target.value,
+                      })
+                    }
+                  />
+                </div>
+                <div>
+                  <label className="text-start text-sm font-semibold text-gray-500 block font-sans">
+                    Introduce una Talla
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Introduce la talla"
+                    name="text"
+                    className="2xl:w-full h-[40px] 2xl:h-[45px] w-[230px] sm:w-full bg-gray-600 text-white form-control mb-2 px-4 bg-opacity-20 rounded-md"
+                    value={formData.talla}
+                    onChange={(event) =>
+                      setFormData({
+                        ...formData,
+                        talla: event.target.value,
                       })
                     }
                   />
@@ -155,7 +170,9 @@ export default function FormProduct({ onClose, openModal }: HandleCancel) {
             <div className="mt-5">
               <button
                 type="submit"
-                className="w-full h-[35px] btn btn-primary bg-[#F97300] hover:bg-[#F97300] hover:text-gray-100 text-gray-500 rounded-md bg-opacity-20 font-sans"
+                className={`w-full h-[35px] btn btn-primary bg-[#F97300] hover:bg-[#F97300] hover:text-gray-100 text-gray-500 rounded-md bg-opacity-20 font-sans ${
+                  !formData && "opacity-50 cursor-not-allowed"
+                }`}
               >
                 Agregar Nuevo Producto
               </button>
@@ -166,3 +183,6 @@ export default function FormProduct({ onClose, openModal }: HandleCancel) {
     </>
   );
 }
+// className={`w-full h-[38px] flex justify-center items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#F97300] hover:bg-[#f97000dc] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#F97300] ${
+//   (!file || uploading) && "opacity-50 cursor-not-allowed"
+// }`}
