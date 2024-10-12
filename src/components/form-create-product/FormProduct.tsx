@@ -1,11 +1,15 @@
 "use client";
 
-import { IProducts } from "@/interfaces/IProducts";
+import { createProducMutation } from "@/interfaces/DataType";
+// import { IProducts } from "@/interfaces/IProducts";
 import { HandleCancel } from "@/interfaces/typesModal";
-import axios from "axios";
+// import axios from "axios";
 import React, { useState } from "react";
+import { useMutation } from "react-query";
 
 export default function FormProduct({ onClose, openModal }: HandleCancel) {
+  const mutation = useMutation(createProducMutation);
+
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -17,25 +21,20 @@ export default function FormProduct({ onClose, openModal }: HandleCancel) {
 
   if (!openModal) return <></>;
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
     try {
-      const productData: IProducts = {
-        ...formData,
+      mutation.mutate({
+        description: formData.description,
+        image_url: formData.image_url,
+        name: formData.name,
         price: Number(formData.price),
+        stock: formData.stock,
         talla: Number(formData.talla),
-      };
-
-      const newProduct = await axios.post(
-        "https://softinventory-back-production.up.railway.app/api/products/create",
-        productData
-      );
-
-      console.log("Success:", newProduct.data);
+      });
       onClose();
     } catch (error) {
-      console.log("Error", error);
+      console.log("error al crear", error);
     }
   };
 
@@ -45,7 +44,7 @@ export default function FormProduct({ onClose, openModal }: HandleCancel) {
         onSubmit={handleSubmit}
         className="fixed top-0 right-0 bottom-0 left-0 bg-black bg-opacity-40 flex justify-center items-center "
       >
-        <div className="relative left-[455px] bottom-44">
+        <div className="relative left-[650px] bottom-44">
           <button
             className="text-white hover:text-red-600 font-light"
             onClick={() => onClose()}

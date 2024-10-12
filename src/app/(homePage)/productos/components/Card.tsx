@@ -10,7 +10,7 @@ export default function Card({
   price,
   stock,
 }: IProducts) {
-  const maxLength: number = 15
+  const maxLength: number = 1
   const truncatedDescription = description.length > maxLength 
   ? `${description.slice(0, maxLength)}...` 
   : description;
@@ -27,7 +27,7 @@ export default function Card({
           <strong className="text-gray-950 font-sans text-[16px]">
             {name}
           </strong>
-          <p className="font-semibold font-sans">${price}</p>
+          <p className="font-semibold font-sans">{price}</p>
         </div>
         <div className=" flex justify-between items-center">
           <p className="text-gray-700 text-[13px]  font-sans line-clamp-2">{truncatedDescription}</p>

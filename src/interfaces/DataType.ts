@@ -1,3 +1,6 @@
+import axios from "axios";
+import { IProducts } from "./IProducts";
+
 export interface Client {
   _id: string;
   first_name: string;
@@ -24,3 +27,12 @@ export interface Order {
   date_order: Date;
   __v: number;
 }
+
+
+export const createProducMutation = async (productData: IProducts) => {
+  const response = await axios.post(
+    "https://softinventory-back-production.up.railway.app/api/products/create",
+    productData
+  );
+  return response.data;
+};

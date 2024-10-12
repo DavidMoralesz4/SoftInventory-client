@@ -9,7 +9,6 @@ export default function AppSider() {
   const items: MenuItem[] = [
     {
       key: "g1",
-      // label: <p className="font-semibold text-white">Vista Previa</p>,
       type: "group",
       children: [
         {

@@ -40,11 +40,6 @@ export default function TableOrder() {
       key: "email",
     },
     {
-      title: "Documento",
-      dataIndex: ["client_id", "document"],
-      key: "document",
-    },
-    {
       title: "Estado",
       dataIndex: "status",
       key: "status",
@@ -113,9 +108,8 @@ export default function TableOrder() {
       <Pagination
         className="relative top-2"
         showSizeChanger
-        // onShowSizeChange={}
-        defaultCurrent={3}
-        total={500}
+        defaultCurrent={1}
+        total={100}
       />
     </>
   );

@@ -1,5 +1,6 @@
 "use client";
 
+import { QueryClient, QueryClientProvider } from "react-query";
 import AppFooter from "@/components/AppFooter";
 import AppSider from "@/components/AppSider";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
@@ -13,6 +14,8 @@ export default function layoutDashboardPage({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const queryClient = new QueryClient();
+
   return (
     <AntdRegistry>
       <Layout>
@@ -49,7 +52,9 @@ export default function layoutDashboardPage({
                 boxShadow: "20px 20px 60px #bebebe, -20px -20px 60px #ffffff",
               }}
             >
-              {children}
+              <QueryClientProvider client={queryClient}>
+                {children}
+              </QueryClientProvider>
             </div>
           </Content>
           <Footer
