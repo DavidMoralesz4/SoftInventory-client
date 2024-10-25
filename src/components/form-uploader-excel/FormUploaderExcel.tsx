@@ -1,8 +1,85 @@
+import { useState } from "react";
 import { ModalExcel } from "@/interfaces/typesModal";
+import Papa from "papaparse";
 
+const allowedExtensions = ["csv"];
 
-function FormUploaderExcel({closeModalExcel, excelModalForm}: ModalExcel) {
-    if(!excelModalForm) return <></>
+// Define the type for parsed data
+interface ParsedData {
+  [key: string]: string;
+}
+function FormUploaderExcel({ closeModalExcel, excelModalForm }: ModalExcel) {
+  const [data, setData] = useState<[string, string][]>([]);
+
+  // State for handling errors
+  const [error, setError] = useState<string>("");
+
+  // State to store the file uploaded by the user
+  const [file, setFile] = useState<File | null>(null);
+
+  if (!excelModalForm) return <></>;
+
+  // Handle file input changes
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setError("");
+
+    // Check if user has entered the file
+    if (e.target.files && e.target.files.length) {
+      const inputFile = e.target.files[0];
+
+      // Check the file extensions, if not included in allowed extensions show error
+      const fileExtension = inputFile?.type.split("/")[1];
+      if (!allowedExtensions.includes(fileExtension)) {
+        setError("Please input a csv file");
+        return;
+      }
+
+      // If input type is correct, set the state
+      setFile(inputFile);
+    }
+  };
+
+  const handleParse = () => {
+    // Show an alert if no file is provided
+    if (!file) {
+      alert("Enter a valid file");
+      return;
+    }
+
+    // Initialize a reader to read the file
+    const reader = new FileReader();
+
+    // Event listener on reader when the file loads
+    reader.onload = ({ target }) => {
+      if (!target?.result) {
+        setError("Failed to read file");
+        return;
+      }
+
+      const csv = Papa.parse<ParsedData>(target.result as string, {
+        header: true,
+      });
+
+      if (!csv.data.length) {
+        setError("No data found in CSV file");
+        return;
+      }
+
+      // Extract rows and columns from the parsed data
+      const parsedData = csv.data;
+      const rows = Object.keys(parsedData[0]);
+      const columns = Object.values(parsedData[0]);
+
+      // Transform rows and columns into an array of tuples
+      const res = rows.reduce<[string, string][]>((acc, e, i) => {
+        return [...acc, [e, columns[i]]];
+      }, []);
+
+      setData(res);
+    };
+
+    reader.readAsText(file);
+  };
 
   return (
     <div className="fixed top-0 right-0 bottom-0 left-0 bg-black bg-opacity-40 flex justify-center items-center">
@@ -18,28 +95,36 @@ function FormUploaderExcel({closeModalExcel, excelModalForm}: ModalExcel) {
           Agrega un producto
         </h2>
         <div className="mb-4">
-          <label
-            htmlFor="excel-file"
-            className="block text-sm font-medium text-gray-300 mb-2"
-          >
-            Seleccionar archivo Excel
-          </label>
-          <input
-            type="file"
-            id="excel-file"
-            accept=".xlsx, .xls"
-            // onChange={handleFileChange}
-            className="block w-full text-sm text-gray-300
-            file:mr-4 file:py-2 file:px-4
-            file:rounded-full file:border-0
-            file:text-sm file:font-semibold
-            file:bg-[#F97300] file:text-white
-            hover:file:bg-[#f97000dc]"
-          />
+          <h3>Read CSV file in React</h3>
+          <div className="container">
+            <label htmlFor="csvInput" style={{ display: "block" }}>
+              Enter CSV File
+            </label>
+            <input
+              onChange={handleFileChange}
+              id="csvInput"
+              name="file"
+              type="file"
+            />
+            <div>
+              <button onClick={handleParse}>Parse</button>
+            </div>
+            <div style={{ marginTop: "3rem" }}>
+              {error ? (
+                <p className="error">{error}</p>
+              ) : (
+                data.map((e, i) => (
+                  <div key={i} className="text-white flex justify-center items-center text-center">
+                    {e[0]}: {e[1]}
+                  </div>
+                ))
+              )}
+            </div>
+          </div>
         </div>
         {/* {file && (
           <p className="mb-4 text-sm text-gray-300">
-            Archivo seleccionado: 
+            Archivo seleccionado:
           </p>
         )}
         <button

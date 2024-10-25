@@ -7,7 +7,6 @@ import axios from "axios";
 
 export default function TableOrder() {
   const [dataSources, setDataSource] = useState<Order[]>([]);
-  
 
   useEffect(() => {
     const dataAxios = async () => {
@@ -82,8 +81,8 @@ export default function TableOrder() {
   const handleStatusChange = async (value: string, record: Order) => {
     try {
       const res = await axios.put(
-        `http://localhost:4000/api/order/update/${record._id}`, // Usar el ID de la orden en la URL
-        { status: value } // Enviar el status en el cuerpo
+        `http://localhost:4000/api/order/update/${record._id}`,
+        { status: value }
       );
 
       console.log(`Success: ${res.data} for ${record.client_id.first_name}`);

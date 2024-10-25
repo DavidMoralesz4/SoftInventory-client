@@ -19,7 +19,7 @@ export default function FormProduct({ onClose, openModal }: HandleCancel) {
     price: "",
   });
 
-  if (!openModal) return <></>;
+  if (!openModal) return <></>; // Deja de mostrar la modal
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
