@@ -8,7 +8,7 @@ export default function Welcome() {
       <div className="flex flex-col justify-center items-center text-white gap-8 rounded-[30px] welcome h-full shadow-xl">
         <Image src="/logoBlanco.png" alt="logoBlanco" width={80} height={90} className="w-auto h-auto" />
         <h1 className="relative text-2xl md:text-3xl 2xl:text-4xl xl:text-5xl text-white text-shadow-lg font-bold animate-fadeIn font-sans">
-          Bienvenido a SoftInventory
+          Bienvenido a X
         </h1>
         <p className="xl:text-3xl">Comienza a vender!</p>
       </div>

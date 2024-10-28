@@ -1,93 +1,93 @@
 "use client";
-import axios from "axios";
 import AppModal from "@/components/modal/Modal";
-import { Image } from "antd";
-import { useQuery } from "react-query";
-import { Pagination, Table } from "antd";
-import { TypesModal } from "@/interfaces/typesModal";
+import Papa from "papaparse";
+// import { Product, TypesModal } from "@/interfaces/typesModal";
 import { AppContext } from "@/context/modalContext";
 import ButtonIU from "@/components/buttonIU/ButtonIU";
-import { useContext } from "react";
-import { IProducts } from "@/interfaces/IProducts";
+import { useContext, useState } from "react";
+import { Product, TypesModal } from "@/interfaces/typesModal";
 
-export const fetchProducts = async () => {
-  try {
-    const res = await axios.get(
-      "https://softinventory-back-production.up.railway.app/api/products"
-    );
-    return res.data;
-  } catch (error) {
-    console.log(error);
-  }
-};
+// export const fetchProducts = async () => {
+//   try {
+//     const res = await axios.get(
+//       "https://softinventory-back-production.up.railway.app/api/products"
+//     );
+//     return res.data;
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
 
-export const deletedProducts = async (_id: IProducts) => {
-  try {
-    const deleted = await axios.delete(
-      `https://softinventory-back-production.up.railway.app/api/product/deleted/${_id}`
-    );
-    console.log(`Producto elminado ${deleted}`);
-  } catch (error) {
-    console.log(`Error al eliminar ${error}`);
-  }
-};
+// export const deletedProducts = async (_id: IProducts) => {
+//   try {
+//     const deleted = await axios.delete(
+//       `https://softinventory-back-production.up.railway.app/api/product/deleted/${_id}`
+//     );
+//     console.log(`Producto elminado ${deleted}`);
+//   } catch (error) {
+//     console.log(`Error al eliminar ${error}`);
+//   }
+// };
 
 export default function Products() {
-  const { data, isLoading, error } = useQuery("data", fetchProducts);
-  const { setOpenModal, setExcelModalForm } = useContext(
-    AppContext
-  ) as TypesModal;
+  const { setExcelModalForm } = useContext(AppContext) as TypesModal;
+  const [data, setData] = useState<Product[]>([]);
 
-  const columns = [
-    {
-      title: "Producto",
-      dataIndex: "image_url",
-      key: "image_url",
-      render: (image_url: string, name: string) => (
-        <Image src={image_url} alt={name} width={60} height={60} />
-      ),
-    },
-    {
-      title: "Nombre",
-      dataIndex: "name",
-      key: "name",
-    },
-    {
-      title: "Descripcion",
-      dataIndex: "description",
-      key: "description",
-      render: (description: string) => <p>{description}</p>,
-    },
-    {
-      title: "Precio",
-      dataIndex: "price",
-      key: "precie",
-      render: (price: number) => <p>${price.toLocaleString()}</p>,
-    },
-    {
-      title: "Stock",
-      dataIndex: "stock",
-      key: "stock",
-    },
-    {
-      title: "Talla",
-      dataIndex: "size",
-      key: "size",
-    },
-    {
-      title: "",
-      dataIndex: "deleted",
-      key: "deleted",
-      render: () => (
-        <div>
-          <p className="hover:text-red-500 cursor-pointer font-sans font-normal text-[17px]">X</p>
-        </div>
-      ),
-    },
-  ];
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
 
-  if (isLoading) return <p>Cargando...</p>;
-  if (error) return <p>Error al cargar...</p>;
+    Papa.parse(file, {
+      header: true,
+      skipEmptyLines: true,
+      complete: (result) => {
+        const parseData = result.data as Product[];
+        console.log("Parsed Data:", parseData); // Verifica el contenido del archivo CSV
+        setData(parseData);
+      },
+      error: (error) => {
+        console.error("Error al procesar el archivo CSV:", error.message);
+      },
+    });
+  };
+
+  // const columns = [
+  //   {
+  //     title: "Producto",
+  //     dataIndex: "image_url",
+  //     key: "image_url",
+  //     render: (image_url: string, record: Product) => (
+  //       <Image src={image_url} alt={record.name} width={60} height={60} />
+  //     ),
+  //   },
+  //   {
+  //     title: "Nombre",
+  //     dataIndex: "name",
+  //     key: "name",
+  //   },
+  //   {
+  //     title: "Descripción",
+  //     dataIndex: "description",
+  //     key: "description",
+  //     render: (description: string) => <p>{description}</p>,
+  //   },
+  //   {
+  //     title: "Precio",
+  //     dataIndex: "price",
+  //     key: "price",
+  //     render: (price: number) => <p>${price}</p>,
+  //   },
+  //   {
+  //     title: "Stock",
+  //     dataIndex: "stock",
+  //     key: "stock",
+  //   },
+  //   {
+  //     title: "Talla",
+  //     dataIndex: "size",
+  //     key: "size",
+  //   },
+  // ];
 
   return (
     <>
@@ -95,32 +95,93 @@ export default function Products() {
         <div className="flex-row justify-center">
           <h1 className="text-3xl font-sans">Inventario de Productos</h1>
           <div className="flex gap-3">
-            <ButtonIU onClick={() => setOpenModal(true)}>
-              Crear un nuevo producto
-            </ButtonIU>
             <ButtonIU onClick={() => setExcelModalForm(true)}>
               Subir un nuevo producto
             </ButtonIU>
           </div>
         </div>
-        <div className="">
-          <>
-            <Table
-              dataSource={data}
-              columns={columns}
-              // className="cursor-pointer"
-              pagination={false}
-            ></Table>
-            <Pagination
-              className="relative top-2"
-              showSizeChanger
-              defaultCurrent={1}
-              total={100}
-            />
-          </>
+
+        <div>
+          {data.length > 0 && (
+            <div className="bg-white rounded-xl shadow-md overflow-hidden">
+              <table className="min-w-full bg-white border border-gray-200">
+                <thead className="bg-gray-100 text-black">
+                  <tr>
+                    {Object.keys(data[0]).map((key) => (
+                      <th
+                        key={key}
+                        className="py-3 px-6 text-left text-sm font-medium  border-b"
+                      >
+                        {key}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {data.map((row, index) => (
+                    <tr key={index} className="hover:bg-gray-50">
+                      {Object.values(row).map((value, inde) => (
+                        <td key={inde} className="py-3 px-6 text-sm border-b">
+                          {value}
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
         </div>
       </div>
-      <AppModal />
+      <AppModal handleFileChange={handleFileChange} />
     </>
   );
 }
+
+/* <div className="flex-col gap-5 xl:flex justify-between pb-6">
+        <div className="flex-row justify-center">
+          <h1 className="text-3xl font-sans">Inventario de Productos</h1>
+          <div className="flex gap-3">
+            <ButtonIU onClick={() => setOpenModal(true)}>
+              Crear un nuevo producto
+            </ButtonIU>
+            <ButtonIU onClick={() => setExcelModalForm(true)}>
+              {/* Subir un nuevo producto */
+// </ButtonIU>
+// </div>
+// </div>
+// <div className="">
+// <>
+// <Table
+// dataSource={data}
+// columns={columns}
+// className="cursor-pointer"
+// pagination={false}
+// // ></Table>
+// <Pagination
+//   className="relative top-2"
+//   showSizeChanger
+//   defaultCurrent={1}
+//   total={100}
+//       />
+//     </>
+//   </div>
+// </div>
+// <AppModal /> */}
+/////////////////////////////////////////
+// <div className="">
+//     <>
+//       <Table
+//         dataSource={data}
+//         columns={columns}
+//         // className="cursor-pointer"
+//         pagination={false}
+//       ></Table>
+//       <Pagination
+//         className="relative top-2"
+//         showSizeChanger
+//         defaultCurrent={1}
+//         total={100}
+//       />
+//     </>
+//   </div>

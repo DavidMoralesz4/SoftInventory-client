@@ -5,7 +5,7 @@ export default function FormLogin() {
   return (
     <div className="flex justify-center xl:bg-inherit  items-center sm:relative flex-col rounded-lg xl:mt-24 p-12 sm:w-[500px] xl:shadow-none 2xl:mt-0 xl:bottom-16 xl:w-[460px] 2xl:w-[550px]">
       <h1 className="relative text-2xl md:text-4xl 2xl:text-4xl text-white text-shadow-lg font-bold animate-fadeIn font-sans">
-        SoftInventory
+        X
       </h1>
       <p className="relative text-lg md:text-xl 2xl:text-2xl text-gray-500 animate-fadeIn font-sans 2xl:mt-10 xl:mt-8">
         BIENVENIDO

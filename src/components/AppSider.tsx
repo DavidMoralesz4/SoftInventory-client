@@ -138,7 +138,7 @@ export default function AppSider() {
             className="flex lg:hidden"
           />
           <h1 className="text-gray-100 text-2xl font-semibold font-sans hidden lg:flex">
-            SoftInventory
+            X
           </h1>
         </div>
 
