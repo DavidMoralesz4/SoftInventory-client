@@ -34,7 +34,6 @@ export default function RootLayout({
       className={`${josefin_sans.variable} ${roboto_mono.variable}`}
     >
       <body
-      // className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <AntdRegistry>
           <Layout>
