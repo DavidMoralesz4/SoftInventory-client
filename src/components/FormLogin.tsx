@@ -1,38 +1,21 @@
-"use client"
+"use client";
 
-import axios from "axios";
+import { authLoginSesion } from "@/app/(auth)/login/components/LoginAuth";
+// import axios from "axios";
 import Link from "next/link";
 import React, { FormEvent, useState } from "react";
 
-export type PropsLogin = {
-    sesionLogin: (credentials: {email:string, password: string}) => void;
-}
-
-
 export default function FormLogin() {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const handleLogin = async(event: FormEvent) => {
-    event.preventDefault()
-    try {
-      const credentials = {
-        email: email,
-        password: password
-      }
-      const response = await axios.post(
-        `http://localhost:4001/auth/login`,
-         credentials
-      );
-      return response.data;
-    } catch (error) {
-      console.error(error);
-      throw error;
-    }
-  }
+  const handleLogin = async (event: FormEvent) => {
+    event.preventDefault();
+    await authLoginSesion({ email, password });
+  };
 
   return (
-    <form onSubmit={handleLogin} className="flex justify-center xl:bg-inherit  items-center sm:relative flex-col rounded-lg xl:mt-24 p-12 sm:w-[500px] xl:shadow-none 2xl:mt-0 xl:bottom-16 xl:w-[460px] 2xl:w-[550px]">
+    <div className="flex justify-center xl:bg-inherit  items-center sm:relative flex-col rounded-lg xl:mt-24 p-12 sm:w-[500px] xl:shadow-none 2xl:mt-0 xl:bottom-16 xl:w-[460px] 2xl:w-[550px]">
       <h1 className="relative text-2xl md:text-4xl 2xl:text-4xl text-white text-shadow-lg font-bold animate-fadeIn font-sans">
         X
       </h1>
@@ -44,7 +27,7 @@ export default function FormLogin() {
       </p>
 
       <form
-        // onSubmit={handleSubmit}
+        onSubmit={handleLogin}
         className="flex justify-center items-center flex-col w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg gap-3"
       >
         <div className="w-full ">
@@ -109,6 +92,6 @@ export default function FormLogin() {
           </div>
         </div>
       </form>
-    </form>
+    </div>
   );
 }
