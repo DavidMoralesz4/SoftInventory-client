@@ -1,9 +1,8 @@
 "use client";
 
 import { authLoginSesion } from "@/app/(auth)/login/components/LoginAuth";
-// import axios from "axios";
-import Link from "next/link";
 import React, { FormEvent, useState } from "react";
+
 
 export default function FormLogin() {
   const [email, setEmail] = useState("");
@@ -11,7 +10,7 @@ export default function FormLogin() {
 
   const handleLogin = async (event: FormEvent) => {
     event.preventDefault();
-    await authLoginSesion({ email, password });
+   await authLoginSesion({ email, password });
   };
 
   return (
@@ -65,31 +64,11 @@ export default function FormLogin() {
         <div className="flex flex-col gap-3 pt-5 w-full">
           <button
             type="submit"
-            className="w-full h-[35px] btn btn-primary bg-[#F97300] text-gray-500 rounded-md bg-opacity-20 font-sans"
+            className="w-full h-[35px] btn btn-primary bg-[#c55a02] text-gray-800 rounded-md font-sans"
           >
             Iniciar Sesión
           </button>
 
-          <button
-            type="button"
-            className="flex justify-center items-center w-full h-[40px] btn btn-primary bg-gray-950 text-white rounded-md border-purple-300 border font-sans"
-            // onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
-          >
-            {/* <img
-              src="googleIcon.png"
-              alt="google.png"
-              className="h-6 w-6 mr-2"
-            /> */}
-            Iniciar sesión con Google
-          </button>
-        </div>
-        <div>
-          <div className="flex gap-2 ">
-            <p className="text-gray-500 font-sans">¿No estás registrado? </p>
-            <Link href="/register" className="text-[#F97300] font-sans">
-              Regístrate aquí
-            </Link>
-          </div>
         </div>
       </form>
     </div>

@@ -4,7 +4,9 @@ import TableOrder from "./TableOrder";
 
 export const fetchOrders = async () => {
   try {
-    const res = await axios.get("https://softinventory-back-production.up.railway.app/api/order");
+    const res = await axios.get(
+      "https://softinventory-back-production.up.railway.app/api/order"
+    );
     return res.data;
   } catch (error) {
     console.log(error);
@@ -13,7 +15,7 @@ export const fetchOrders = async () => {
 
 export default async function Table() {
   return (
-    <div >
+    <div>
       <h1 className="font-sans text-3xl mb-4">Ordenes</h1>
       <TableOrder />
     </div>

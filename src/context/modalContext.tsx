@@ -1,4 +1,5 @@
 "use client";
+
 import { TypesModal } from "@/interfaces/typesModal";
 import { createContext, useState } from "react";
 
