@@ -1,16 +1,23 @@
 "use client";
 
-import { authLoginSesion } from "@/app/(auth)/login/components/LoginAuth";
 import React, { FormEvent, useState } from "react";
+import { signIn } from "next-auth/react";
 
 
 export default function FormLogin() {
+  
+  // const { data: session } = useSession();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleLogin = async (event: FormEvent) => {
     event.preventDefault();
-   await authLoginSesion({ email, password });
+
+    await signIn("credentials", {
+      email,
+      password,
+      redirect: false,
+    });
   };
 
   return (

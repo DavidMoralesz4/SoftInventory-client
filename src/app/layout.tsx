@@ -5,6 +5,7 @@ import { Layout } from "antd";
 import { Content } from "antd/es/layout/layout";
 import { Roboto_Mono, Josefin_Sans } from "next/font/google";
 import { AppContextProvider } from "@/context/modalContext";
+import SessionAuthProvider from "@/context/SessionAuthProvider";
 
 const josefin_sans = Josefin_Sans({
   subsets: ["latin"],
@@ -33,8 +34,7 @@ export default function RootLayout({
       lang="en"
       className={`${josefin_sans.variable} ${roboto_mono.variable}`}
     >
-      <body
-      >
+      <body>
         <AntdRegistry>
           <Layout>
             <Layout>
@@ -47,7 +47,7 @@ export default function RootLayout({
               >
                 <AppContextProvider>
                   <div className="flex items-center justify-center ">
-                    {children}
+                    <SessionAuthProvider>{children}</SessionAuthProvider>
                   </div>
                 </AppContextProvider>
               </Content>
