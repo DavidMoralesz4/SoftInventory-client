@@ -5,7 +5,7 @@ import TableOrder from "./TableOrder";
 export const fetchOrders = async () => {
   try {
     const res = await axios.get(
-      "https://softinventory-back-production.up.railway.app/api/order"
+      "http://localhost:4001/api/order"
     );
     return res.data;
   } catch (error) {

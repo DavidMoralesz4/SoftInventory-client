@@ -1,0 +1,1 @@
+export { default } from '../adidas/components/AdidasPage'

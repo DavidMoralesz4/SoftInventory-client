@@ -19,45 +19,48 @@ const handler = NextAuth({
         },
       },
       async authorize(credentials) {
-       try {
-        const response = await axios.post(`http://localhost:4001/auth/login`, {
-            email: credentials?.email,
-            password: credentials?.password,
-          });
-          
-          
+        try {
+          const response = await axios.post(
+            `http://localhost:4001/auth/login`,
+            {
+              email: credentials?.email,
+              password: credentials?.password,
+            }
+          );
+
           console.log(response.data.message);
-          const user = response.data
-          
-          if(user) {
-              return {
-                  id: user.id,
-                  name: user.name,
-                  email: user.email
-              }
+          const user = response.data;
+
+          if (user) {
+            return {
+              id: user.id,
+              email: user.email,
+            };
           } else {
-              return null
+            return null;
           }
-       } catch (error) {
-        console.error("Error durante la autenticación:", error)
-        return null
-       }
+        } catch (error) {
+          console.error("Error durante la autenticación:", error);
+          return null;
+        }
       },
     }),
   ],
 
-
+  pages: {
+    signIn: "/login",
+  },
 
   callbacks: {
-    async jwt({user, token}){
-        if(user) {
-            token.email = user.email
-            token.name = user.name
-        }
-        return token;
+    async jwt({ user, token }) {
+      if (user) {
+        token.email = user.email;
+      }
+      return token;
     },
-    
-  }
+
+    // session() {}
+  },
 });
 
 export { handler as GET, handler as POST };

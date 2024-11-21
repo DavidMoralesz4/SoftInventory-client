@@ -1,4 +1,7 @@
+"use client";
+
 import { Menu, MenuProps } from "antd";
+// import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -6,6 +9,8 @@ import React from "react";
 type MenuItem = Required<MenuProps>["items"][number];
 
 export default function AppSider() {
+  // const { data: session } = useSession();
+
   const items: MenuItem[] = [
     {
       key: "g1",
@@ -138,7 +143,7 @@ export default function AppSider() {
             className="flex lg:hidden"
           />
           <h1 className="text-gray-100 text-2xl font-semibold font-sans hidden lg:flex">
-            X
+            V
           </h1>
         </div>
 
@@ -155,14 +160,6 @@ export default function AppSider() {
             }}
           />
         </div>
-
-        {/* <div className="flex  items-center px-3 h-12 w-[180px] m-2 border-[#DDDDDD] border rounded-lg cursor-pointer bottom-2  ">
-          <Avatar size={30} icon={<UserAddOutlined />} />
-          <div className="flex flex-col items-center px-4 ">
-            <p className="font-semibold text-[12px]">Admin</p>
-            <p className="text-[12px]">Jose Morales</p>
-          </div>
-        </div> */}
       </div>
     </>
   );

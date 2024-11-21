@@ -82,7 +82,7 @@ export default function TableOrder() {
   const handleStatusChange = async (value: string, record: Order) => {
     try {
       const res = await axios.put(
-        `http://localhost:4000/api/order/update/${record._id}`, // Usar el ID de la orden en la URL
+        `http://localhost:4001/api/order/update/${record._id}`, // Usar el ID de la orden en la URL
         { status: value } // Enviar el status en el cuerpo
       );
 
