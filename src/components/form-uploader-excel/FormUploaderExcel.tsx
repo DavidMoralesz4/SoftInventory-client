@@ -1,7 +1,7 @@
 import { ModalExcel } from "@/interfaces/typesModal";
 
 
-function FormUploaderExcel({closeModalExcel, excelModalForm, handleFileChange}: ModalExcel) {
+function FormUploaderExcel({closeModalExcel, excelModalForm}: ModalExcel) {
   if(!excelModalForm) return <></>
 
 
@@ -29,7 +29,8 @@ function FormUploaderExcel({closeModalExcel, excelModalForm, handleFileChange}: 
             type="file"
             id="excel-file"
             accept=".csv"
-            onChange={handleFileChange}
+            onChange={() => {}}
+
             className="block w-full text-sm text-gray-300
             file:mr-4 file:py-2 file:px-4
             file:rounded-full file:border-0
