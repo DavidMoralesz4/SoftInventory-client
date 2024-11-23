@@ -12,16 +12,16 @@ export const AppContext = createContext<TypesModal | boolean>(false);
 export const AppContextProvider = ({ children }: PropsChildren) => {
   const [excelModalForm, setExcelModalForm] = useState<boolean>(false);
 
-  const closeModalExcel = () => {
-    setExcelModalForm(false);
-  };
+  const onClose = () => {
+    setExcelModalForm(false)
+  }
 
   return (
     <AppContext.Provider
       value={{
         excelModalForm,
         setExcelModalForm,
-        closeModalExcel,
+        onClose
       }}
     >
       {children}

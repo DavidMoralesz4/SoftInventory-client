@@ -1,15 +1,18 @@
-import { ModalExcel } from "@/interfaces/typesModal";
+"use client";
 
+import React from "react";
 
-function FormUploaderExcel({closeModalExcel, excelModalForm}: ModalExcel) {
-  if(!excelModalForm) return <></>
+import { HandleCancel } from "@/interfaces/typesModal";
 
+function FormUploaderExcel({ excelModalForm, onClose, readFileCsv }: HandleCancel) {
+
+  if (!excelModalForm) return <></>; 
 
   return (
     <div className="fixed top-0 right-0 bottom-0 left-0 bg-black bg-opacity-40 flex justify-center items-center">
       <div className="bg-[#0d1111] p-10 mt-5 rounded-md relative">
         <button
-          onClick={closeModalExcel}
+          onClick={() => onClose()}
           className="absolute top-2 right-2 text-white hover:text-red-500 focus:outline-none w-8 h-8 flex items-center justify-center"
           aria-label="Cerrar"
         >
@@ -29,8 +32,7 @@ function FormUploaderExcel({closeModalExcel, excelModalForm}: ModalExcel) {
             type="file"
             id="excel-file"
             accept=".csv"
-            onChange={() => {}}
-
+            onChange={readFileCsv}
             className="block w-full text-sm text-gray-300
             file:mr-4 file:py-2 file:px-4
             file:rounded-full file:border-0

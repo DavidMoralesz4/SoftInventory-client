@@ -10,18 +10,11 @@ export interface Product {
 export interface TypesModal {
   excelModalForm: boolean;
   setExcelModalForm: React.Dispatch<React.SetStateAction<boolean>>;
-  closeModalExcel: () => void;
+  onClose: () => void
 }
 
-// export interface TypesModalExcel {
-//   closeModalExcel: () => void;
-// }
-
-export type ModalExcel = {
+export type HandleCancel = {
+  onClose: () => void
   excelModalForm: boolean;
-  closeModalExcel: () => void;
-};
-
-export type PropsHandle = {
-  handleFileChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-};
+  readFileCsv: (event: React.ChangeEvent<HTMLInputElement>) => void
+}
