@@ -11,7 +11,7 @@ export default function AdidasCards({
   return (
     <>
       <div className="group relative flex flex-col h-full">
-      <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none  lg:h-80">
+      <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none lg:h-60">
         <img
           src={image_url}
           alt={name}

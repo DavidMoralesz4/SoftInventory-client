@@ -2,14 +2,21 @@
 
 import Papa from "papaparse";
 import { Product } from "@/interfaces/typesModal";
-import AppModal from "@/components/AppModal/AppModal";
 import SearchBar from "@/components/searchBar/SearchBar";
 import Link from "next/link";
-import React, { useState } from "react";
+import { AppContext } from "@/context/modalContext";
+import { TypesModal } from "@/interfaces/typesModal";
+import React, { useState, useContext } from "react";
 import AdidasCards from "./AdidasCards";
+import ButtonIU from "@/components/buttonIU/ButtonIU";
+import FormUploaderExcel from "@/components/form-uploader-excel/FormUploaderExcel";
 
 export default function AdidasPage() {
   const [products, setProducts] = useState<Product[]>([]);
+
+  const { excelModalForm, onClose, setExcelModalForm } = useContext(
+    AppContext
+  ) as TypesModal;
 
   const readFileCsv = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -35,21 +42,30 @@ export default function AdidasPage() {
           Volver
         </Link>
         <SearchBar />
-        <AppModal readFileCsv={readFileCsv} />
+        <div>
+          <ButtonIU onClick={() => setExcelModalForm(true)}>
+            Subir productos
+          </ButtonIU>
+        </div>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
         {products.map((product, index) => (
           <AdidasCards
-          key={index}
-          name={product.name}
-          description={product.description}
+            key={index}
+            name={product.name}
+            description={product.description}
             image_url={product.image_url}
             stock={product.stock}
             price={product.price}
             size={product.size}
-            />
-          ))}
+          />
+        ))}
       </div>
+      <FormUploaderExcel
+        onClose={onClose}
+        excelModalForm={excelModalForm}
+        readFileCsv={readFileCsv}
+      />
     </>
   );
 }
