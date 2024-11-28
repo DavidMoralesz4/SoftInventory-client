@@ -1,10 +1,10 @@
 export interface Product {
   name: string;
   description: string;
-  price: number;
-  stock: number;
   size: string;
+  stock: string;
   image_url: string;
+  price: number;
 }
 
 export interface TypesModal {
@@ -13,8 +13,10 @@ export interface TypesModal {
   onClose: () => void
 }
 
-export type HandleCancel = {
-  onClose: () => void
+export interface FormUploaderExcelProps {
+  onClose: () => void;
   excelModalForm: boolean;
-  readFileCsv: (event: React.ChangeEvent<HTMLInputElement>) => void
+  readFileCsv: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  handleSubmit: (event: React.FormEvent) => void;
+  message: string;
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Product } from "@/interfaces/typesModal";
 import SearchBar from "@/components/searchBar/SearchBar";
 import Link from "next/link";
@@ -9,42 +9,59 @@ import { TypesModal } from "@/interfaces/typesModal";
 import AdidasCards from "./AdidasCards";
 import ButtonIU from "@/components/buttonIU/ButtonIU";
 import FormUploaderExcel from "@/components/form-uploader-excel/FormUploaderExcel";
-import axios from "axios";
+import { asyncDataCsv, getDataProds } from "@/lib/fetchData";
 
 export default function AdidasPage() {
-  // const [products, setProducts] = useState<Product[]>([]);
+  const [products, setProducts] = useState<Product[]>([]);
   const [file, setFile] = useState<File | null>(null);
   const [message, setMessage] = useState("");
-  
+
   const { excelModalForm, onClose, setExcelModalForm } = useContext(
     AppContext
   ) as TypesModal;
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
-    if(!file) {
-      setMessage("Por favor seleciona un archivo CSV.")
-      return
+    if (!file) {
+      setMessage("Por favor selecciona un archivo CSV.");
+      return;
     }
-    
-    const formData = new FormData()
-    formData.append("file", file)
+
+    const formData = new FormData();
+    formData.append("file", file);
 
     try {
-      const response = axios.post("http://localhost:4001/api/brand/6747a0d7fcae916239798b0d/products/csv", formData)
-      setMessage(response.data.message)
-    } catch (error){
-      console.error("Ha ocurrido un error", error)
-    } 
-  }
+      const response = await asyncDataCsv(formData);
+
+      console.log("Respuesta del servidor:", response);
+
+      if (Array.isArray(response.data.brands.products)) {
+        // Si la respuesta es un array entonces:
+        setMessage(response.data.message || "Productos subidos correctamente."); // Y Tiro el mensaje
+      } else {
+        setMessage("Error: Los productos no están en formato correcto."); // Caso contrario pues: error
+      }
+    } catch (error) {
+      setMessage("Hubo un error al subir el archivo.");
+      console.error("Error al subir archivo:", error);
+    }
+  };
 
   const readFileCsv = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if(event.target.files && event.target.files[0]){
-      setFile(event.target.files[0])
+    if (event.target.files && event.target.files[0]) {
+      setFile(event.target.files[0]);
     }
+  };
 
-  }
+  /// Simepre estare consultando los products de esta marca
+  useEffect(() => {
+    const data = async () => {
+      const result = await getDataProds();
+      setProducts(result.data); // Accede correctamente a los productos
+    };
+    data();
+  }, []);
 
   return (
     <>
@@ -53,14 +70,12 @@ export default function AdidasPage() {
           Volver
         </Link>
         <SearchBar />
-        <div>
-          <ButtonIU onClick={() => setExcelModalForm(true)}>
-            Subir productos
-          </ButtonIU>
-        </div>
+        <ButtonIU onClick={() => setExcelModalForm(true)}>
+          Subir productos
+        </ButtonIU>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-        {/* {products.map((product, index) => (
+        {products.map((product, index) => (
           <AdidasCards
             key={index}
             name={product.name}
@@ -70,12 +85,14 @@ export default function AdidasPage() {
             price={product.price}
             size={product.size}
           />
-        ))} */}
+        ))}
       </div>
       <FormUploaderExcel
         onClose={onClose}
         excelModalForm={excelModalForm}
         readFileCsv={readFileCsv}
+        handleSubmit={handleSubmit}
+        message={message}
       />
     </>
   );
